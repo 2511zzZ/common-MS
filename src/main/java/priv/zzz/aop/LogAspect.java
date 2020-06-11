@@ -10,6 +10,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import priv.zzz.result.Result;
+import priv.zzz.result.ResultSet;
 import priv.zzz.utils.DateFormatter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +21,8 @@ import java.util.*;
 @Component
 @Slf4j
 public class LogAspect {
-    @Pointcut("@annotation(priv.zzz.aop.LogAnnotation)")
-//    @Pointcut("execution(public * priv.zzz.controller..*.*(..))")
+
+    @Pointcut("execution(* priv.zzz.controller..*.*(..))")
     public void controllerAspect() {
 
     }
@@ -32,8 +34,12 @@ public class LogAspect {
 
     @AfterReturning(pointcut = "controllerAspect()", returning = "returnValue")
     public void after(JoinPoint joinPoint, Object returnValue){
-        // todo: status = result.status
-        log.info(getResponseMessage(joinPoint, 200));
+        if (returnValue instanceof Result){
+            log.info(getResponseMessage(joinPoint, ((Result) returnValue).getStatus()));
+        }
+        if (returnValue instanceof ResultSet){
+            log.info(getResponseMessage(joinPoint, ((ResultSet) returnValue).getStatus()));
+        }
     }
 
     private String getRequestMessage(JoinPoint joinPoint) {
