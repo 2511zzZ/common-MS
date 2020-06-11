@@ -19,3 +19,6 @@ logging:
   file:
     path: ./logs
 
+swagger:
+  enable: true
+

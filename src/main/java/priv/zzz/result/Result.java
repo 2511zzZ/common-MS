@@ -35,6 +35,10 @@ public class Result<T> implements Serializable {
         return new Result<>(ResultCode.FAIL.getCode(), ResultCode.FAIL.getMessage(), null);
     }
 
+    public static <T> Result<T> failure(ResultCode resultCode) {
+        return new Result<>(resultCode.getCode(), resultCode.getMessage(), null);
+    }
+
     public static <T> Result<T> failure(Integer status, String message){
         return new Result<>(status, message, null);
     }
