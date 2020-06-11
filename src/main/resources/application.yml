@@ -1,0 +1,21 @@
+spring:
+  jackson:
+    time-zone: GMT+8
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/live
+    username: root
+    password:
+    platform: mysql
+
+    type: com.alibaba.druid.pool.DruidDataSource
+
+logging:
+  level:
+    priv.zzz: debug
+  config: classpath:logback-spring.xml
+  file:
+    path: ./logs
+
