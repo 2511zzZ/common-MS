@@ -9,6 +9,7 @@ import java.util.Date;
 @Slf4j
 public class MySlf4jLog {
     public void loggerTest(){
+        // 使用@Slf4j注解
         log.trace("logger trace test");
         log.debug("logger debug test");
         log.info("logger info test");

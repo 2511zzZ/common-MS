@@ -1,15 +1,22 @@
 package priv.zzz.result;
 
 import lombok.Data;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 public class Result<T> implements Serializable {
 
+    Date timestamp;
     Integer status;
     String message;
     T data;
+    String path;
 
     public Result() {}
 
@@ -17,6 +24,14 @@ public class Result<T> implements Serializable {
         this.status = status;
         this.message = message;
         this.data = data;
+        this.timestamp = new Date();
+        this.path = "";
+
+        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        if(attributes != null){
+            HttpServletRequest request = ((ServletRequestAttributes)attributes).getRequest();
+            this.path = request.getRequestURI();
+        }
     }
 
     public static <T> Result<T> success(){
