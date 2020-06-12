@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DruidConfig {
-    @ConfigurationProperties(prefix = "spring.datasource")
+    @ConfigurationProperties(prefix = "spring.datasource.druid")
     @Bean(initMethod = "init",destroyMethod = "close")
     public DruidDataSource druid(){
         return new DruidDataSource();

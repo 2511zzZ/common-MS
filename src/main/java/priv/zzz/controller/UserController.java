@@ -37,9 +37,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public Result<Integer> updateUser(@RequestBody @Valid ExampleUser user) throws ExampleException {
+    public Result<ExampleUser> updateUser(@RequestBody @Valid ExampleUser user) throws ExampleException {
         userService.updateUser(user);
-        return Result.success();
+        return Result.success(userService.getUserByName(user.getUsername()));
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)

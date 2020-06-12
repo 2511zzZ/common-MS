@@ -4,20 +4,33 @@ spring:
   profiles:
     active: dev
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/common_ms?&useSSL=false
-    username: root
-    password:
     platform: mysql
     type: com.alibaba.druid.pool.DruidDataSource
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/common_ms?&useSSL=false
+      username: root
+      password:
+
+      initial-size: 1
+      minIdle: 3
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 30000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,wall,slf4j
+      connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
 
 logging:
   level:
-    priv.zzz: debug
+    priv.zzz: info
   config: classpath:logback-spring.xml
   file:
     path: ./logs
