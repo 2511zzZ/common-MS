@@ -5,7 +5,7 @@ common-MS目前已经完成了日志处理、异常处理、参数校验、结�
 
 熟悉本项目后可以将example包已经所有命名中带有Example的文件全部删除。
 
-项目开发历程见：[SpringBoot后端系统系统的基础架构]()
+项目开发历程见：[SpringBoot后端系统系统的基础架构](https://www.cnblogs.com/2511zzZ/p/13109151.html)
 
 ### 日志处理
 
