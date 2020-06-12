@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyLog {
     public void loggerTest(){
+
         Logger logger = LoggerFactory.getLogger(MyLog.class);
+
         logger.trace("logger trace test");
         logger.debug("logger debug test");
         logger.info("logger info test");

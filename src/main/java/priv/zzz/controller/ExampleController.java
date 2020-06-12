@@ -5,11 +5,13 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import priv.zzz.exception.ExampleException;
-import priv.zzz.model.TestUser;
+import priv.zzz.model.ExampleUser;
 import priv.zzz.result.Result;
 import priv.zzz.result.ResultCode;
 import priv.zzz.result.ResultSet;
+import priv.zzz.service.UserService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -34,11 +36,11 @@ public class ExampleController {
 
     // ResultSet<T> test
     @RequestMapping(value = "result/set", method = RequestMethod.GET)
-    public ResultSet<TestUser> resultSetTest() {
-        List<TestUser> userList = Arrays.asList(
-                new TestUser("Alice", 20, 0, "12345@qq.com"),
-                new TestUser("Eric", 21, 1, "12345@163.com"),
-                new TestUser("France", 22, 1, "12345@gmail.com")
+    public ResultSet<ExampleUser> resultSetTest() {
+        List<ExampleUser> userList = Arrays.asList(
+                new ExampleUser("Alice", 20, 0, "12345@qq.com"),
+                new ExampleUser("Eric", 21, 1, "12345@163.com"),
+                new ExampleUser("France", 22, 1, "12345@gmail.com")
         );
         return ResultSet.success(userList.size(), userList);
     }
@@ -48,24 +50,10 @@ public class ExampleController {
     public Result<Integer> failTest(@RequestParam Integer code, HttpServletResponse response) {
 
         response.setStatus(code);
-        if (code == 404) {
-            return Result.failure(ResultCode.NOT_FOUND);
-        }
-        if (code == 403) {
-            return Result.failure(ResultCode.UNAUTHORIZED);
-        }
-        if (code == 500) {
-            return Result.failure(ResultCode.SERVER_ERROR);
-        }
+        if (code == 404) { return Result.failure(ResultCode.NOT_FOUND); }
+        if (code == 403) { return Result.failure(ResultCode.UNAUTHORIZED); }
+        if (code == 500) { return Result.failure(ResultCode.SERVER_ERROR); }
         return Result.failure();
-    }
-
-    // validator test
-    @RequestMapping(value = "user", method = RequestMethod.POST)
-    @ApiOperation(value = "validator测试方法")
-    public Result<Integer> saveUser(@RequestBody @Valid TestUser user) {
-        // do something
-        return Result.success();
     }
 
     // exception test

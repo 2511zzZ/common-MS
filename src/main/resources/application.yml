@@ -5,12 +5,15 @@ spring:
     active: dev
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/live
+    url: jdbc:mysql://localhost:3306/common_ms?&useSSL=false
     username: root
     password:
     platform: mysql
-
     type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
 logging:
   level:
@@ -18,6 +21,13 @@ logging:
   config: classpath:logback-spring.xml
   file:
     path: ./logs
+
+mybatis:
+  type-aliases-package: com.priv.model
+  # 配置注解+XML方式的扫描路径
+  mapper-locations: classpath:/mybatis-mappers/*
+  configuration:
+    mapUnderscoreToCamelCase: true
 
 swagger:
   enable: true

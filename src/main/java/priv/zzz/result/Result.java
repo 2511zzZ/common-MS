@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
+// 返回单个数据或对象
 public class Result<T> implements Serializable {
 
     Date timestamp;
@@ -27,6 +28,7 @@ public class Result<T> implements Serializable {
         this.timestamp = new Date();
         this.path = "";
 
+        // 使用RequestContextHolder获取请求路径
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
         if(attributes != null){
             HttpServletRequest request = ((ServletRequestAttributes)attributes).getRequest();

@@ -15,9 +15,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {
+
+    // 这里是要扫描接口的包目录，一般为controller目录
     public static final String BASE_PACKAGE = "priv.zzz.controller";
+
     @Value("${swagger.enable}")
     private boolean enableSwagger;
+
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)

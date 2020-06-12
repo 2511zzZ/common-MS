@@ -14,7 +14,8 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TestUser {
+public class ExampleUser {
+
 
     @NotNull(message = "用户名不能为空")
     @NotBlank(message = "用户名不能为空")

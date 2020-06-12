@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+// 返回一组数据或对象
 public class ResultSet<T> implements Serializable {
 
     Date timestamp;

@@ -1,6 +1,7 @@
 package priv.zzz.result;
 
 public enum ResultCode {
+
     SUCCESS(200, "success"),
     UNAUTHORIZED(401, "unauthorized"),
     FORBIDDEN(403, "forbidden"),
