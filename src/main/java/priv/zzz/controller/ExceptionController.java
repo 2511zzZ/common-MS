@@ -1,6 +1,8 @@
 package priv.zzz.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -31,6 +33,11 @@ public class ExceptionController {
     @ExceptionHandler(value = { IllegalAccessException.class })
     public Result assertException(IllegalAccessException e) {
         return Result.failure(400, e.getMessage());
+    }
+
+    @ExceptionHandler(value = { IncorrectCredentialsException.class, UnknownAccountException.class })
+    public Result shiroException() {
+        return Result.failure(401, "用户名或密码错误，请重试");
     }
 
     @ExceptionHandler(value = {ExampleException.class})

@@ -30,7 +30,7 @@ spring:
 
 logging:
   level:
-    priv.zzz: info
+    priv.zzz: debug
   config: classpath:logback-spring.xml
   file:
     path: ./logs
