@@ -5,14 +5,16 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import priv.zzz.shiro.ShiroFilterMap;
-import priv.zzz.shiro.UserRealm;
+import priv.zzz.shiro.*;
 
 import java.util.Map;
 
 
 @Configuration
 public class ShiroConfig {
+
+    private final static String sessionStrategy = "sessionId";
+//    private static String sessionStrategy = "JWT";
 
     //创建ShiroFilterFactoryBean
     @Bean
@@ -34,10 +36,30 @@ public class ShiroConfig {
 
     //创建DefaultWebSecurityManager
     @Bean(name="securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm){
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm,
+                                                                  @Qualifier("mySessionManager") MySessionManager mySessionManager){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //关联realm
         securityManager.setRealm(userRealm);
+
+        if(sessionStrategy.equals(ShiroConstant.SESSION_ID_NAME)){
+            // 使用tokenManager直接返回sessionId
+        // 禁止重写URL 否则会出现/401;JSESSIONID=XXX之类的情况
+        mySessionManager.setSessionIdUrlRewritingEnabled(false);
+        //设置sessionManager
+        securityManager.setSessionManager(mySessionManager);
+        }else if (sessionStrategy.equals(ShiroConstant.JWT_NAME)){
+            // 使用cacheManager返回JWT
+//            DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
+//            DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
+//            // 关闭shiro的默认session
+//            defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
+//            subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
+//            securityManager.setSubjectDAO(subjectDAO);
+//            // 使用自己的cacheManager
+//            securityManager.setCacheManager(new MyCacheManager());
+        }
+
 
         return securityManager;
     }
@@ -46,6 +68,11 @@ public class ShiroConfig {
     @Bean(name="userRealm")
     public UserRealm getUserRealm(){
         return new UserRealm();
+    }
+
+    @Bean(name="mySessionManager")
+    public MySessionManager getMySessionManager(){
+        return new MySessionManager();
     }
 
 }
