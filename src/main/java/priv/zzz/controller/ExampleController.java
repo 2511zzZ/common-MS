@@ -1,7 +1,7 @@
 package priv.zzz.controller;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiImplicitParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import priv.zzz.exception.ExampleException;
@@ -9,12 +9,11 @@ import priv.zzz.model.ExampleUser;
 import priv.zzz.result.Result;
 import priv.zzz.result.ResultCode;
 import priv.zzz.result.ResultSet;
-import priv.zzz.service.UserService;
+import priv.zzz.utils.DateFormatter;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -58,8 +57,14 @@ public class ExampleController {
 
     // exception test
     @RequestMapping(value = "exception", method = RequestMethod.GET)
-    public Result exampleException() throws ExampleException {
+    public Result<Exception> exampleException() throws ExampleException {
         throw new ExampleException("这是一个测试异常");
+    }
+
+    @RequestMapping(value = "datetime", method = RequestMethod.GET)
+    @ApiImplicitParam(name = "datetime", defaultValue = "Tue Jun 16 11:54:55 CST 2020")
+    public Result<String> datetimeTest(@RequestParam Date datetime) {
+        return Result.success(DateFormatter.format(datetime));
     }
 }
 

@@ -15,6 +15,7 @@ import priv.zzz.result.ResultSet;
 import priv.zzz.utils.DateFormatter;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Aspect
@@ -65,7 +66,7 @@ public class LogAspect {
         HttpServletRequest request = ((ServletRequestAttributes)(Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))).getRequest();
         String url = request.getRequestURI();
         String requestMethod = request.getMethod();
-        String datetime = DateFormatter.format(new Date());
+        String datetime = DateFormatter.format(LocalDateTime.now());
 
         return datetime + " " + url + " " + requestMethod;
     }
